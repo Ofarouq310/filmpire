@@ -10,8 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alan-ai/alan-sdk-web": "^1.8.95",
+    "@mui/icons-material": "^7.3.2",
+    "@mui/material": "^7.3.2",
+    "@mui/styles": "^6.5.0",
+    "@reduxjs/toolkit": "^2.9.0",
+    "axios": "^1.11.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
+    "react-use": "^17.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
