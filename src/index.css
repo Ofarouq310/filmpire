@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+@plugin 'tailwind-scrollbar' {
+    nocompatible: true;
+    preferredStrategy: 'pseudoelements';
+}
+
+
+@theme {
+    --font-sansation: 'Sansation', sans-serif;
+    --font-notosans: 'Noto Sans', sans-serif;
+    --color-primary-color: #1D1E2C;
+    --color-secondary-color: #B5BEC6;
+    --color-tertiary-color: #59656F;
+}
+
+@layer base {
+    * {
+        @apply m-0 p-0 box-border scroll-smooth;
+    }
+
+    body {
+        @apply bg-white text-[#1D1E2C] font-sansation;
+    }
+    
+}
+
+@layer utilities {
+    .categories__list-items {
+        @apply cursor-pointer px-4 py-2 hover:bg-tertiary-color transition duration-150 ease-in-out rounded-sm;
+    }
+}
