@@ -7,7 +7,7 @@ export default function Sidebar( { toggleSidebar } ) {
         transform transition-transform duration-300 ease-in-out
         ${toggleSidebar ? "translate-x-0 max-md:top-20" : "-translate-x-full"}
         md:translate-x-0
-    fixed w-0 md:w-60 h-dvh bg-primary-color overflow-y-scroll scrollbar scrollbar-w-1.5 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white`}>
+    fixed w-0 md:w-60 h-dvh bg-primary-color overflow-y-scroll scrollbar-class`}>
       
       <div className='w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center'>
         <img
