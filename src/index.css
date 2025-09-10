@@ -13,6 +13,7 @@
     --color-primary-color: #1D1E2C;
     --color-secondary-color: #B5BEC6;
     --color-tertiary-color: #59656F;
+    --breakpoint-xs: 480px;
 }
 
 @layer base {
@@ -21,7 +22,11 @@
     }
 
     body {
-        @apply bg-white text-[#1D1E2C] font-sansation;
+        @apply bg-secondary-color text-[#1D1E2C] font-sansation scrollbar-active:bg-primary-color scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white;
+    }
+
+    main {
+        @apply md:ml-60 h-[calc(h-screen-80px)] mt-20;
     }
     
 }
@@ -30,4 +35,57 @@
     .categories__list-items {
         @apply cursor-pointer px-4 py-2 hover:bg-tertiary-color transition duration-150 ease-in-out rounded-sm;
     }
+
+    .all-movies {
+    @apply space-y-10;
+    & ul {
+        @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
+    }
+    }
+
+     .movie-card {
+        @apply bg-primary-color rounded-md shadow-inner;
+
+        & img {
+            @apply h-auto w-full rounded-sm;
+        }
+
+        & h3 {
+            @apply text-secondary-color font-bold text-base line-clamp-1;
+        }
+
+        & .content {
+            @apply mt-2 flex flex-row items-center flex-wrap gap-2;
+        }
+
+        & .rating {
+            @apply flex flex-row items-center gap-1 text-white;
+        }
+
+        & .rating img {
+            @apply size-4 object-contain;
+        }
+
+        & .rating p {
+            @apply font-bold text-base text-tertiary-color;
+        }
+
+        & .content span {
+            @apply text-sm text-secondary-color;
+        }
+
+        & .content .lang {
+            @apply capitalize text-tertiary-color font-medium text-base;
+        }
+
+        & .content .year {
+            @apply text-tertiary-color font-medium text-base;
+        }
+    }
+
+    .scrollbar-class {
+        @apply scrollbar scrollbar-w-1.5 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white scrollbar-active:bg-primary-color;
+    }
 }
+
+
