@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 
-export default function Navbar( { toggleSidebar, setToggleSidebar } ) {
+export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, setToggleMode } ) {
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -39,9 +39,9 @@ export default function Navbar( { toggleSidebar, setToggleSidebar } ) {
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             [theme.breakpoints.up('sm')]: {
-                width: '12ch',
+                width: '18ch',
                 '&:focus': {
-                    width: '20ch',
+                    width: '22ch',
                 },
             },
         },
@@ -61,17 +61,26 @@ export default function Navbar( { toggleSidebar, setToggleSidebar } ) {
     
     
     function handleToggleSidebar() {
-    setToggleSidebar(prev => !prev);
+        setToggleSidebar(prev => !prev);
+    }
+
+    function handleToggleMode() {
+        setToggleMode((prevMode) => {
+            return prevMode === 'dark' ? 'light' : 'dark';
+    });
     }
     
     return (
         <div className='md:w-[calc(100%-240px)] w-full md:ml-60 bg-[#1D1E2C] sm:p-5 p-3 flex items-center justify-between text-white text-2xl font-bold fixed z-10'>
         <div className='sm:flex-row flex-col-reverse flex flex-wrap-reverse gap-3'>
-            {/* <Brightness4Icon /> */}
             <HamburgerWrapper onClick={handleToggleSidebar}>
                 <HamburgerMenuIcon />
             </HamburgerWrapper>
-            <Brightness7Icon />
+            <div onClick={handleToggleMode} className='cursor-pointer'>
+                {toggleMode === 'dark' ?
+                    <Brightness7Icon /> : <Brightness4Icon /> 
+                }
+            </div>
         </div>
 
         <Search>
@@ -83,12 +92,12 @@ export default function Navbar( { toggleSidebar, setToggleSidebar } ) {
             />
         </Search>
         
-        <div className='flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center'>
+        <div className='flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center gap-0.5'>
             <Button variant="text" color='inherit'
             >
             Login
             </Button>
-            <AccountCircle fontSize='medium' />
+            <AccountCircle fontSize='medium' style={{cursor:'pointer'}} />
         </div>
     </div>
   )
