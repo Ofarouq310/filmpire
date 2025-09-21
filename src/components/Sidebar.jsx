@@ -1,6 +1,6 @@
 import { categories, genres } from '../constants';
 import ListItem from './ListItem';
-import { selectGenreOrCategory}  from '../features/currentGenreOrCategory'
+import { selectGenreOrCategory }  from '../features/currentGenreOrCategory'
 import { useDispatch } from 'react-redux';
 
 export default function Sidebar( { toggleSidebar } ) {
@@ -35,7 +35,7 @@ export default function Sidebar( { toggleSidebar } ) {
           {
           categories.map((category) => (
             (
-            <ListItem key={category.title} category={category} onClick= {()=> dispatch(selectGenreOrCategory(category.title))} />
+            <ListItem key={category.title} category={category} onClick= {()=> dispatch(selectGenreOrCategory(category.label))} />
           )))
           }
         </ul>
@@ -46,7 +46,7 @@ export default function Sidebar( { toggleSidebar } ) {
         <ul className='space-y-1 text-lg'>
           {
             genres.map((genre) => (
-            <ListItem key={genre.title} genre={genre} onClick= {()=> dispatch(selectGenreOrCategory(genre.title))} />
+            <ListItem key={genre.title} genre={genre} onClick= {()=> dispatch(selectGenreOrCategory(genre.id))} />
             ))
           }
         </ul>
