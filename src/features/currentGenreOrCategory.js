@@ -9,12 +9,15 @@ export const genreOrCategory = createSlice ({
   },
   reducers: {
     selectGenreOrCategory: (state, action) => {
-      state.genreOrCategoryName = action.payload
-      console.log(action.payload);
-    }
+      state.genreOrCategoryName = action.payload;
+      state.page = 1;
+    },
+    selectPage: (state, action) => {
+      state.page = action.payload;
   }
+}
 })
 
-export const { selectGenreOrCategory } = genreOrCategory.actions;
+export const { selectGenreOrCategory, selectPage } = genreOrCategory.actions;
 
 export default genreOrCategory.reducer;
