@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 @plugin 'tailwind-scrollbar' {
     nocompatible: true;
     preferredStrategy: 'pseudoelements';
 }
 
-
 @theme {
     --font-sansation: 'Sansation', sans-serif;
     --font-notosans: 'Noto Sans', sans-serif;
     --color-primary-color: #1D1E2C;
-    --color-secondary-color: #B5BEC6;
+    --color-secondary-color: #333347;
     --color-tertiary-color: #59656F;
     --breakpoint-xs: 480px;
 }
@@ -22,7 +22,7 @@
     }
 
     body {
-        @apply bg-secondary-color text-[#1D1E2C] font-sansation scrollbar-active:bg-primary-color scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white;
+        @apply bg-primary-color text-[#1D1E2C] font-sansation scrollbar-active:bg-primary-color scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white;
     }
 
     main {
@@ -33,29 +33,25 @@
 
 @layer utilities {
     .categories__list-items {
-        @apply cursor-pointer px-4 py-2 hover:bg-tertiary-color transition duration-150 ease-in-out rounded-sm;
+        @apply cursor-pointer px-4 py-2 hover:bg-[#9c27b0] active:bg-[#7b1fa2] transition duration-150 ease-in-out rounded-sm;
     }
 
     .all-movies {
     @apply space-y-10;
     & ul {
         @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ;
-
-    /* & div:first-child {
-        @apply col-span-4;
-    } */
     }
     }
 
      .movie-card {
-        @apply bg-primary-color rounded-md shadow-inner p-2 m-2;
+        @apply rounded-md shadow-inner p-2 m-3;
 
         & img {
             @apply h-auto w-full rounded-sm;
         }
 
         & h3 {
-            @apply text-secondary-color font-bold text-base line-clamp-1;
+            @apply text-gray-100 font-bold text-base line-clamp-1;
         }
 
         & .content {
@@ -91,5 +87,3 @@
         @apply scrollbar scrollbar-w-1.5 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white scrollbar-active:bg-primary-color;
     }
 }
-
-
