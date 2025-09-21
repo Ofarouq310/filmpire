@@ -71,8 +71,8 @@ export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, s
     }
     
     return (
-        <div className='md:w-[calc(100%-240px)] w-full md:ml-60 bg-[#1D1E2C] sm:p-5 p-3 flex items-center justify-between text-white text-2xl font-bold fixed z-10'>
-        <div className='sm:flex-row flex-col-reverse flex flex-wrap-reverse gap-3'>
+        <div className='md:w-[calc(100%-240px)] h-20 w-full md:ml-60 bg-secondary-color sm:p-5 p-3 flex items-center justify-between text-white text-2xl font-bold fixed top-0 z-10'>
+        <div className='sm:flex-row flex-col-reverse flex flex-wrap-reverse gap-3 items-center'>
             <HamburgerWrapper onClick={handleToggleSidebar}>
                 <HamburgerMenuIcon />
             </HamburgerWrapper>

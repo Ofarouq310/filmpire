@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-import { use, useState } from 'react'
+import Movies from './sections/Movies';
 
 export default function App() {
 
@@ -13,9 +14,9 @@ export default function App() {
         <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} toggleMode={toggleMode} setToggleMode={setToggleMode} />  
       </header>
       <Sidebar toggleSidebar={toggleSidebar} />
-
-      <main className='container mx-auto h-dvh'>
-
+      
+      <main>
+        <Movies />
       </main>
     </>
   )

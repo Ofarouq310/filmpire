@@ -1,13 +1,20 @@
 import { categories, genres } from '../constants';
+import ListItem from './ListItem';
+import { selectGenreOrCategory }  from '../features/currentGenreOrCategory'
+import { useDispatch } from 'react-redux';
 
 export default function Sidebar( { toggleSidebar } ) {
+
+  const dispatch = useDispatch();
+
+
   return (
     <div className={`
         fixed top-0 left-0 h-full w-60 bg-primary-color shadow-lg
         transform transition-transform duration-300 ease-in-out
         ${toggleSidebar ? "translate-x-0 max-md:top-20" : "-translate-x-full"}
         md:translate-x-0
-    fixed w-0 md:w-60 h-dvh bg-primary-color overflow-y-scroll scrollbar scrollbar-w-1.5 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white`}>
+    fixed w-0 md:w-60 h-dvh bg-primary-color overflow-y-scroll scrollbar-class`}>
       
       <div className='w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center'>
         <img
@@ -27,7 +34,8 @@ export default function Sidebar( { toggleSidebar } ) {
         <ul className='space-y-1 text-lg'>
           {
           categories.map((category) => (
-            (<li key={category.title} className='categories__list-items'>{category.logo} {category.title}</li>
+            (
+            <ListItem key={category.title} category={category} onClick= {()=> dispatch(selectGenreOrCategory(category.label))} />
           )))
           }
         </ul>
@@ -38,7 +46,7 @@ export default function Sidebar( { toggleSidebar } ) {
         <ul className='space-y-1 text-lg'>
           {
             genres.map((genre) => (
-              <li key={genre.title} className='categories__list-items'>{genre.logo} {genre.title}</li>
+            <ListItem key={genre.title} genre={genre} onClick= {()=> dispatch(selectGenreOrCategory(genre.id))} />
             ))
           }
         </ul>
