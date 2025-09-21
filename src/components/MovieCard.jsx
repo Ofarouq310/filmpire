@@ -2,12 +2,15 @@ import noPoster from "../assets/imgs/no-movie.png"
 import Rating from "@mui/material/Rating"
 import { styled } from "@mui/styles";
 
-export default function MovieCard({movie:{poster_path, title, original_language, release_date, vote_average}}) {
+export default function MovieCard({movie:{poster_path, title, vote_average}}) {
 
     const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
         color: 'white',
     },
+     "& .MuiRating-iconEmpty": {
+    color: "gray",
+  },
 });
 
 
