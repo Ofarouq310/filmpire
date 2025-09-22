@@ -6,46 +6,10 @@ import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Search from '../components/Search';
 
 
 export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, setToggleMode } ) {
-
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderBottom: '1px solid #ffffff78',
-        color: '#ffffff78',
-        marginLeft: 0,
-        width: '50%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
-        },
-    }));
-    
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-    
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        width: '100%',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            [theme.breakpoints.up('sm')]: {
-                width: '18ch',
-                '&:focus': {
-                    width: '22ch',
-                },
-            },
-        },
-    }));
     
     const HamburgerWrapper = styled('div')(({ theme }) => ({
         cursor: 'pointer',
@@ -69,6 +33,7 @@ export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, s
             return prevMode === 'dark' ? 'light' : 'dark';
     });
     }
+
     
     return (
         <div className='md:w-[calc(100%-240px)] h-20 w-full md:ml-60 bg-secondary-color sm:p-5 p-3 flex items-center justify-between text-white text-2xl font-bold fixed top-0 z-10'>
@@ -82,15 +47,8 @@ export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, s
                 }
             </div>
         </div>
-
-        <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              inputProps={{ 'aria-label': 'search' }}
-            />
-        </Search>
+        
+        <Search />
         
         <div className='flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center gap-0.5'>
             <Button variant="text" color='inherit'
