@@ -1,12 +1,13 @@
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import HamburgerMenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Search from '../components/Search';
+import { useState } from 'react';
+import { fetchToken } from '../utils';
+
 
 
 export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, setToggleMode } ) {
@@ -34,6 +35,8 @@ export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, s
     });
     }
 
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+
     
     return (
         <div className='md:w-[calc(100%-240px)] h-20 w-full md:ml-60 bg-secondary-color sm:p-5 p-3 flex items-center justify-between text-white text-2xl font-bold fixed top-0 z-10'>
@@ -51,10 +54,10 @@ export default function Navbar( { toggleSidebar, setToggleSidebar, toggleMode, s
         <Search />
         
         <div className='flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center gap-0.5'>
-            <Button variant="text" color='inherit'
-            >
-            Login
-            </Button>
+            { isAuthenticated 
+            ? <Button variant="text" color='inherit' onClick={fetchToken}>Login</Button>
+            : <Button variant="text" color='inherit'>Logout</Button>
+            }
             <AccountCircle fontSize='medium' style={{cursor:'pointer'}} />
         </div>
     </div>
