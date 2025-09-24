@@ -21,7 +21,6 @@ export const authSlice = createSlice ({
       localStorage.setItem("session_id", session_id);
     }
   } else {
-    // if no valid user → ensure logged out
     state.user = null;
     state.isAuthenticated = false;
     state.sessionID = null;
