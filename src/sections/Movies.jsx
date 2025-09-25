@@ -49,7 +49,7 @@ export default function Movies() {
         </ul>
       </div>
       <Pagination
-        count={Math.min(data.total_pages, 500)} // TMDB only allows 500 pages
+        count={Math.min(data.total_pages, 500)}
         size="large"
         color="secondary"
         showFirstButton
@@ -57,6 +57,7 @@ export default function Movies() {
         page={page}
         onChange={(event, value) => {
           dispatch(selectPage(value));
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         sx={{
           "& .MuiPaginationItem-root": {
