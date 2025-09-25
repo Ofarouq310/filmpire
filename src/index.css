@@ -28,6 +28,14 @@
     main {
         @apply md:ml-60 h-[calc(h-screen-80px)] mt-20;
     }
+
+    h2 {
+        @apply text-5xl;
+    }
+    
+    h3 {
+        @apply text-2xl;
+    }
     
 }
 
