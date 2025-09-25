@@ -32,6 +32,22 @@
 }
 
 @layer utilities {
+     .search {
+        @apply  px-4 py-3 rounded-lg my-10 max-w-3xl mx-auto;
+
+        & div {
+            @apply relative flex items-center justify-center;
+        }
+
+        & img {
+            @apply absolute left-2 h-5 w-5;
+        }
+
+        & input {
+            @apply w-full bg-transparent placeholder-gray-500 py-1 ml-3 text-base text-gray-200 outline-none border-b-0 focus:border-b focus:border-gray-200 focus:w-2xs transition-all duration-300 text-center ease-in-out;
+        }
+    }
+
     .categories__list-items {
         @apply cursor-pointer px-4 py-2 hover:bg-[#9c27b0] active:bg-[#7b1fa2] transition duration-150 ease-in-out rounded-sm;
     }
