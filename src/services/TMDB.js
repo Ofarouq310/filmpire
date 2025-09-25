@@ -20,7 +20,14 @@ export const tmdbApi = createApi({
                     return `movie/now_playing?page=${page}&api_key=${tmdbApiKey}`;
             }
         }),
+        movieDetails: builder.query({
+            query: (id) => {
+                if(id){
+                    return `movie/${id}?api_key=${tmdbApiKey}`;
+                }
+            }
+        }),
     }),
 })
 
-export const {useGetMoviesQuery} = tmdbApi;
+export const {useGetMoviesQuery, useMovieDetailsQuery} = tmdbApi;
