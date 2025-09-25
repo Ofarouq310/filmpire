@@ -14,7 +14,7 @@ export default function Movies() {
     genreOrCategoryName,
     page,
     searchQuery,
-  });
+  });   
 
   const dispatch = useDispatch();
 
