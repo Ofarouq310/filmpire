@@ -18,7 +18,7 @@ export default function Sidebar( { toggleSidebar } ) {
       
       <div className='w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center'>
         <img
-          src="./icon.png"
+          src="/icon.png"
           alt="logo"
           className='size-6 mx-auto mr-1'
         />
