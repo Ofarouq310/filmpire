@@ -16,7 +16,7 @@ export default function MovieCard({movie:{id: movie_id, poster_path, title, vote
 
   return (
     <div className="movie-card hover:scale-102 transform transition-all duration-300 ease-in-out cursor-pointer">
-      <Link to={`movie/${movie_id}`} >
+      <Link to={`/movie/${movie_id}`} >
         <img src={poster_path
           ? `https://image.tmdb.org/t/p/w500/${poster_path}`
           : noPoster
