@@ -23,11 +23,19 @@ export const tmdbApi = createApi({
         movieDetails: builder.query({
             query: (id) => {
                 if(id){
-                    return `movie/${id}?api_key=${tmdbApiKey}`;
+                    return `movie/${id}?api_key=${tmdbApiKey}&append_to_response=credits,videos`;
                 }
             }
         }),
+        getRecommendations: builder.query({
+            query: (id) => {
+                if(id){
+                    return `movie/${id}/recommendations?api_key=${tmdbApiKey}`;
+                }
+            }
+
+        })
     }),
 })
 
-export const {useGetMoviesQuery, useMovieDetailsQuery} = tmdbApi;
+export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery} = tmdbApi;
