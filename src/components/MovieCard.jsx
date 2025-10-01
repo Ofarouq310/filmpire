@@ -32,13 +32,9 @@ export default function MovieCard({movie:{id: movie_id, poster_path, title, vote
           <div className='rating'>
             <StyledRating readOnly defaultValue={vote_average/2} precision={0.1} />
           </div>
-            {/* <span>•</span>
-            <p className='lang'>{original_language}</p>
-            <span>•</span>
-            <p className='year'>{release_date.slice(0, 4)}</p> */}
+
         </div>
       </div>
-
     </div>
   )
 }
