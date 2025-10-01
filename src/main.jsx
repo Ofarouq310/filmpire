@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 import MovieInformation from './sections/MovieInformation.jsx'
+import Actor from './sections/Actor.jsx'
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Movies />,
+        element: <Movies key="home" />,
       },
       {
         path: 'movie/:id',
         element: <MovieInformation />,
+      },
+      {
+        path: ':categoryOrGenre',
+        element: <Movies key="category" />,
+      },
+      {
+        path: 'actor/:id',
+        element: <Actor />,
       },
     ],
   },
@@ -28,7 +37,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router= {router} />
+      <RouterProvider router={router} />
     </Provider>
   </StrictMode>,
 )
