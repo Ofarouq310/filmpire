@@ -13,7 +13,7 @@ export default function App() {
       <header>
         <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} toggleMode={toggleMode} setToggleMode={setToggleMode} />  
       </header>
-      <Sidebar toggleSidebar={toggleSidebar} />
+      <Sidebar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
       
       <main>
         <Outlet />
