@@ -17,6 +17,7 @@ export default function Movies() {
   });   
 
   const dispatch = useDispatch();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (isFetching)
     return (
