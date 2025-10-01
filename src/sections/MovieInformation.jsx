@@ -14,11 +14,15 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Filter1Icon from '@mui/icons-material/Filter1';
 import { Link } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function MovieInformation() {
 
+  const navigate = useNavigate();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  
   const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
       color: 'white',
@@ -72,7 +76,7 @@ const {
             video.name.toLowerCase().includes("official trailer")
         ) ||
         movie.videos?.results?.find((video) => video.type === "Teaser");
-
+        console.log(movie)
       return (
       <section className="text-white h-full flex flex-col items-center justify-center bg-gray-800">
       <div className="size-full flex flex-col rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
@@ -122,7 +126,7 @@ const {
             </div>
           </div>
           
-          <div className="movie-information-btns flex justify-center flex-wrap gap-2">
+          <div className="movie-information-btns flex justify-center items-center flex-wrap gap-2">
             <div>
                 <Stack direction="row" spacing={0.2}>
                   <Button href={movie.homepage || null} target="_blank" rel="noopener noreferrer" size="small" variant={movie.homepage ? "contained" : "disabled"} endIcon={<WebsiteIcon />}>Website</Button>
@@ -137,11 +141,10 @@ const {
                 <Stack direction="row" spacing={0.2}>
                   <Button  size="small" variant="contained" endIcon={<FavoriteIcon />}>Favorite</Button>
                   <Button  size="small" variant="contained" endIcon={<Filter1Icon />}>Watchlist</Button>
-                  <Button component={Link} to="/" size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</Button>
+                  <Button onClick={() => navigate(-1)} size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</Button>
                 </Stack>
             </div>
           </div>
-
 
         </div>
       </div>
