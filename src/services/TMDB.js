@@ -34,8 +34,16 @@ export const tmdbApi = createApi({
                 }
             }
 
+        }),
+        getActor: builder.query({
+            query: (id) => {
+                if(id){
+                    return `person/${id}?api_key=${tmdbApiKey}&append_to_response=movie_credits`;
+                }
+            }
+
         })
     }),
 })
 
-export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery} = tmdbApi;
+export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery, useGetActorQuery} = tmdbApi;
