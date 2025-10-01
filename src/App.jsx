@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-import Movies from './sections/Movies';
+import { Outlet } from 'react-router-dom';
 
 export default function App() {
 
@@ -13,10 +13,10 @@ export default function App() {
       <header>
         <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} toggleMode={toggleMode} setToggleMode={setToggleMode} />  
       </header>
-      <Sidebar toggleSidebar={toggleSidebar} />
+      <Sidebar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
       
       <main>
-        <Movies />
+        <Outlet />
       </main>
     </>
   )

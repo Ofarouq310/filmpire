@@ -20,7 +20,30 @@ export const tmdbApi = createApi({
                     return `movie/now_playing?page=${page}&api_key=${tmdbApiKey}`;
             }
         }),
+        movieDetails: builder.query({
+            query: (id) => {
+                if(id){
+                    return `movie/${id}?api_key=${tmdbApiKey}&append_to_response=credits,videos`;
+                }
+            }
+        }),
+        getRecommendations: builder.query({
+            query: (id) => {
+                if(id){
+                    return `movie/${id}/recommendations?api_key=${tmdbApiKey}`;
+                }
+            }
+
+        }),
+        getActor: builder.query({
+            query: (id) => {
+                if(id){
+                    return `person/${id}?api_key=${tmdbApiKey}&append_to_response=movie_credits`;
+                }
+            }
+
+        })
     }),
 })
 
-export const {useGetMoviesQuery} = tmdbApi;
+export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery, useGetActorQuery} = tmdbApi;

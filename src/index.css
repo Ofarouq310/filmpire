@@ -28,6 +28,14 @@
     main {
         @apply md:ml-60 h-[calc(h-screen-80px)] mt-20;
     }
+
+    h2 {
+        @apply mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white;
+    }
+    
+    h3 {
+        @apply mb-1 font-normal text-lg text-gray-700 dark:text-gray-400;
+    }
     
 }
 

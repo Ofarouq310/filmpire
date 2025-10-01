@@ -14,9 +14,10 @@ export default function Movies() {
     genreOrCategoryName,
     page,
     searchQuery,
-  });
+  });   
 
   const dispatch = useDispatch();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (isFetching)
     return (
