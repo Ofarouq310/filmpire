@@ -40,7 +40,7 @@ export default function Actor() {
           </p>
         );
   return (
-    <section className="text-white h-full flex flex-col items-center justify-center bg-gray-800">
+    <section className="text-black dark:text-white h-full flex flex-col items-center justify-center">
       <div className="size-full flex flex-col rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
         <div className='flex-1 flex justify-center'>
           <div className="rounded-full">

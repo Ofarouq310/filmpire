@@ -5,13 +5,20 @@ import { Link } from "react-router-dom";
 
 export default function MovieCard({movie:{id: movie_id, poster_path, title, vote_average}}) {
 
-    const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': {
-        color: 'white',
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#1e2939",
     },
-     "& .MuiRating-iconEmpty": {
-    color: "gray",
-  },
+    "& .MuiRating-iconEmpty": {
+      color: "#6b7280", 
+    },
+
+    ".dark & .MuiRating-iconFilled": {
+      color: "#6A9C89", 
+    },
+    ".dark & .MuiRating-iconEmpty": {
+      color: "#a1a1aa",
+    },
 });
 
   return (
