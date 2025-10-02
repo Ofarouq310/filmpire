@@ -6,12 +6,11 @@ import { Outlet } from 'react-router-dom';
 export default function App() {
 
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [toggleMode, setToggleMode]  = useState('dark');
 
   return (
     <>
       <header>
-        <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} toggleMode={toggleMode} setToggleMode={setToggleMode} />  
+        <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />  
       </header>
       <Sidebar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
       

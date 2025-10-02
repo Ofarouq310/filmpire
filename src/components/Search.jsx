@@ -18,12 +18,13 @@ export default function Search() {
     return (
         <div className="search">
             <div>
-                <SearchIcon className="text-gray-200" />
+                <SearchIcon className="text-gray-900 dark:text-white " />
                 <input 
                     name="search input"
                     type="text"
                     placeholder="Search through thousands of movies"
                     value={query}
+                    className='placeholder-red-300'
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && query.trim()) {

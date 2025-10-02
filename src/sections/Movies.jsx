@@ -4,6 +4,8 @@ import Spinner from '../components/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '@mui/material/Pagination';
 import { selectPage } from '../features/currentGenreOrCategory';
+import FeaturedCard from '../components/FeaturedCard';
+
 
 export default function Movies() {
   const { genreOrCategoryName, page, searchQuery } = useSelector(
@@ -42,9 +44,11 @@ export default function Movies() {
 
   return (
     <section className="flex flex-col items-center justify-center mb-10">
+      <FeaturedCard movie= {data.results.slice(0,1)} />
+
       <div className="p-8 all-movies">
         <ul>
-          {data.results.map((movie) => (
+          {data.results.slice(1,17).map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </ul>
@@ -52,7 +56,6 @@ export default function Movies() {
       <Pagination
         count={Math.min(data.total_pages, 500)}
         size="large"
-        color="secondary"
         showFirstButton
         showLastButton
         page={page}
@@ -60,16 +63,23 @@ export default function Movies() {
           dispatch(selectPage(value));
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
-        sx={{
-          "& .MuiPaginationItem-root": {
-            color: "white",
-          },
-          "& .Mui-selected": {
-            color: "secondary",
-            backgroundColor: "black",
-          },
-        }}
-      />
+          sx={{
+            "& .MuiPaginationItem-root": {
+              color: "#1f2937",
+            },
+            "& .MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "#1e2939 ",
+              color: "#fff",
+            },
+            ".dark & .MuiPaginationItem-root": {
+              color: "#e5e7eb",
+            },
+            ".dark & .MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "#6A9C89",
+              color: "white",
+            },
+          }}
+        />      
     </section>
   );
 }

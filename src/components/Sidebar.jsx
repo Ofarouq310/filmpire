@@ -15,11 +15,11 @@ export default function Sidebar( { setToggleSidebar, toggleSidebar } ) {
 
   return (
     <div className={`
-        fixed z-9 top-0 left-0 h-full w-60 bg-primary-color shadow-lg
+        fixed z-9 top-0 left-0 h-full w-60 dark:bg-gray-800 bg-[#6A9C89] shadow-lg
         transform transition-transform duration-300 ease-in-out
         ${toggleSidebar ? "translate-x-0 max-md:top-20" : "-translate-x-full"}
         md:translate-x-0
-    fixed w-0 md:w-60 h-dvh bg-primary-color overflow-y-scroll scrollbar-class`}>
+    fixed w-0 md:w-60 h-dvh overflow-y-scroll scrollbar-class`}>
       
         <Link to={`/`} onClick={() => {dispatch(resetState());}}>
       <div className='w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center'>
@@ -36,8 +36,8 @@ export default function Sidebar( { setToggleSidebar, toggleSidebar } ) {
         </div>
         </Link>
 
-      <section className='py-5 text-white border-b-2 border-[#b5bec638]'>
-        <h2 className='mb-3 text-tertiary-color text-base px-4 '>Categories</h2>
+      <section className='py-5 text-black dark:text-white border-b-2 border-[#b5bec638]'>
+        <h2 className='mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 '>Categories</h2>
         <ul className='space-y-1 text-lg'>
           {
           categories.map((category) => (
@@ -48,8 +48,8 @@ export default function Sidebar( { setToggleSidebar, toggleSidebar } ) {
         </ul>
       </section>
 
-      <section className='py-5 text-white border-b-2 border-[#b5bec638]'>
-        <h2 className='mb-3 text-tertiary-color text-base px-4 '>Genres</h2>
+      <section className='py-5 text-black dark:text-white border-b-2 border-[#b5bec638]'>
+        <h2 className='mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 '>Genres</h2>
         <ul className='space-y-1 text-lg'>
           {
             genres.map((genre) => (

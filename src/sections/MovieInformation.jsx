@@ -23,14 +23,21 @@ export default function MovieInformation() {
   const navigate = useNavigate();
   window.scrollTo({ top: 0, behavior: "smooth" });
   
-  const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-      color: 'white',
-  },
+   const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#1e2939",
+    },
     "& .MuiRating-iconEmpty": {
-  color: "gray",
-},
-  });
+      color: "#6b7280", 
+    },
+
+    ".dark & .MuiRating-iconFilled": {
+      color: "#6A9C89", 
+    },
+    ".dark & .MuiRating-iconEmpty": {
+      color: "#a1a1aa",
+    },
+});
 
   const params = useParams();
   const {
@@ -78,8 +85,8 @@ const {
         movie.videos?.results?.find((video) => video.type === "Teaser");
         console.log(movie)
       return (
-      <section className="text-white h-full flex flex-col items-center justify-center bg-gray-800">
-      <div className="size-full flex flex-col rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
+      <section className="text-black dark:text-white h-full flex flex-col items-center justify-cente">
+      <div className="size-full flex flex-col gap-5 rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
         <div className='flex-1 flex justify-center'>
           <div className="rounded-full">
             <img 

@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
 @plugin 'tailwind-scrollbar' {
     nocompatible: true;
     preferredStrategy: 'pseudoelements';
@@ -22,8 +24,12 @@
     }
 
     body {
-        @apply bg-primary-color text-[#1D1E2C] font-sansation scrollbar-active:bg-primary-color scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F] scrollbar-track-white;
-    }
+        @apply font-sansation scrollbar scrollbar-w-2 
+                scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F];
+
+        @apply bg-[#E9EFEC] text-gray-900;
+        @apply dark:bg-gray-800 dark:text-white;
+    }   
 
     main {
         @apply md:ml-60 h-[calc(h-screen-80px)] mt-20;
@@ -40,24 +46,28 @@
 }
 
 @layer utilities {
-     .search {
+    .search {
         @apply  px-4 py-3 rounded-lg my-10 max-w-3xl mx-auto;
 
-        & div {
-            @apply relative flex items-center justify-center;
-        }
+    & div {
+        @apply relative flex items-center justify-center;
+    }
 
-        & img {
-            @apply absolute left-2 h-5 w-5;
-        }
+    & img {
+        @apply absolute left-2 h-5 w-5;
+    }
 
-        & input {
-            @apply w-full bg-transparent placeholder-gray-500 py-1 ml-3 text-base text-gray-200 outline-none border-b-0 focus:border-b focus:border-gray-200 focus:w-2xs transition-all duration-300 text-center ease-in-out;
-        }
+    & input {
+        @apply w-full bg-transparent placeholder-gray-700 py-1 ml-3 text-base 
+            outline-none border-b-0 focus:border-b 
+            focus:w-2xs transition-all duration-300 text-center ease-in-out;
+        @apply text-gray-900 dark:text-gray-200;
+        @apply focus:border-gray-500 dark:focus:border-gray-200;
+    }
     }
 
     .categories__list-items {
-        @apply cursor-pointer px-4 py-2 hover:bg-[#9c27b0] active:bg-[#7b1fa2] transition duration-150 ease-in-out rounded-sm;
+        @apply cursor-pointer px-4 py-2 dark:hover:bg-[#6A9C89] dark:active:bg-[#578875] hover:bg-gray-800 active:bg-gray-900 hover:text-gray-100 transition duration-150 ease-in-out rounded-sm;
     }
 
     .all-movies {
@@ -68,14 +78,15 @@
     }
 
      .movie-card {
-        @apply rounded-md shadow-inner p-2 m-3;
+        @apply rounded-md border-none shadow-inner m-3 bg-transparent;
 
         & img {
-            @apply h-auto w-full rounded-sm;
+            @apply h-auto w-full rounded-sm shadow-black shadow-xl/50;
         }
 
         & h3 {
-            @apply text-gray-100 font-bold text-base line-clamp-1;
+          @apply font-bold text-base line-clamp-1;
+          @apply text-gray-900 dark:text-gray-100;
         }
 
         & .content {
