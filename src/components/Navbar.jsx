@@ -4,10 +4,11 @@ import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Search from "../components/Search";
 import { useEffect } from "react";
-import { fetchToken, createSessionID, logout, moviesApi } from "../utils";
+import { fetchToken, createSessionID, moviesApi } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser, logoutUser } from "../features/auth";
+import { setUser } from "../features/auth";
 import DarkModeToggle from "./DarkModeToggle";
+import { Link } from "react-router-dom";
 
 export default function Navbar({ setToggleSidebar }) {
   const HamburgerWrapper = styled("div")(() => ({
@@ -23,6 +24,7 @@ export default function Navbar({ setToggleSidebar }) {
   }));
 
   const dispatch = useDispatch();
+
   const { isAuthenticated } = useSelector((state) => state.auth || {});
 
   useEffect(() => {
@@ -51,14 +53,7 @@ export default function Navbar({ setToggleSidebar }) {
     }
   }, [dispatch]);
 
-  const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
-      localStorage.removeItem("session_id");
-      localStorage.removeItem("request_token");
-      dispatch(logoutUser());
-    }
-  };
+
 
   return (
     <div
@@ -81,14 +76,26 @@ export default function Navbar({ setToggleSidebar }) {
       <Search />
 
       <div className="flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center gap-0.5">
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={isAuthenticated ? handleLogout : fetchToken}
-          startIcon={<AccountCircle fontSize="medium" />}
-        >
-          {isAuthenticated ? "Logout" : "Login"}
-        </Button>
+       {isAuthenticated ? (
+          <Link to="/myprofile">
+            <Button
+              variant="text"
+              color="inherit"
+              startIcon={<AccountCircle fontSize="medium" />}
+            >
+              Profile
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={fetchToken}
+            startIcon={<AccountCircle fontSize="medium" />}
+          >
+            Login
+          </Button>
+        )}
       </div>
     </div>
   );

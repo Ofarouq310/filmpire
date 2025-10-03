@@ -67,7 +67,8 @@
     }
 
     .categories__list-items {
-        @apply cursor-pointer px-4 py-2 dark:hover:bg-[#6A9C89] dark:active:bg-[#578875] hover:bg-gray-800 active:bg-gray-900 hover:text-gray-100 transition duration-150 ease-in-out rounded-sm;
+        @apply cursor-pointer px-4 py-2 dark:hover:bg-[#6A9C89] dark:active:bg-[#578875] hover:bg-gray-800 active:bg-gray-900
+        hover:text-gray-100 transition duration-150 ease-in-out rounded-sm;
     }
 
     .all-movies {

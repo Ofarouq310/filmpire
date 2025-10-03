@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 import MovieInformation from './sections/MovieInformation.jsx'
 import Actor from './sections/Actor.jsx'
+import MyProfile from './sections/MyProfile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: 'actor/:id',
         element: <Actor />,
+      },
+      {
+        path: 'myprofile',
+        element: <MyProfile />
       },
     ],
   },

@@ -97,7 +97,7 @@ const {
           </div>
         </div>
 
-        <div className='flex-2  px-3 smpx-5 flex flex-col gap-3'>
+        <div className='flex-2 px-3 sm:px-5 flex flex-col gap-3'>
           <div className="flex flex-col justify-between items-center px-4 max-md:py-4 leading-normal text-center">
             <h2 className= "text-center">{movie.title}</h2>
 
