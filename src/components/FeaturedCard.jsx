@@ -9,7 +9,7 @@ export default function FeaturedCard({ movie }) {
   return (
     <Link
       to={`/movie/${featuredMovie.id}`}
-      className="mt-10 w-full block group overflow-hidden shadow-2xl"
+      className="mt-5 w-full block group overflow-hidden shadow-2xl"
     >
       <div
         className="relative h-[490px] w-full rounded-lg overflow-hidden bg-center bg-cover  transition-transform duration-500 group-hover:scale-[1.02]"
