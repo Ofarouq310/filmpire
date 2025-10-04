@@ -26,7 +26,7 @@ export const authSlice = createSlice ({
     state.sessionID = null;
   }
         },
-        logoutUser: (state, action) => {
+        logoutUser: (state) => {
             state.user = null;
             state.isAuthenticated = false;
             state.sessionID = null;
