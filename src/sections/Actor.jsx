@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from "react-router-dom";
+import noPoster from "../assets/imgs/no-movie.png"
+
 
 
 export default function Actor() {
@@ -45,7 +47,7 @@ export default function Actor() {
         <div className='flex-1 flex justify-center'>
           <div className="rounded-full">
             <img 
-              src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
+              src={actor.profile_path ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}` : noPoster}
               alt={`${actor.name} poster`}
               className="shadow-black shadow-xl/50 max-md:h-[350px]"
             />
