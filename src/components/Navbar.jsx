@@ -54,7 +54,6 @@ export default function Navbar({ setToggleSidebar }) {
   }, [dispatch]);
 
 
-
   return (
     <div
     className="
