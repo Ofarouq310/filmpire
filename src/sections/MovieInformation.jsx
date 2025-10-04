@@ -12,32 +12,83 @@ import WebsiteIcon from '@mui/icons-material/Language';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Filter1Icon from '@mui/icons-material/Filter1';
-import { Link } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { useNavigate } from "react-router-dom";
+import { useMoviesActions } from '../utils/moviesLibrary'
+import { useSelector } from "react-redux";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
+const ThemedButton = styled(Button)(() => ({
+  backgroundColor: "#6A9C89",
+  color: "#fff",
+  fontWeight: 600,
+  textTransform: "none",
+  borderRadius: "8px",
+  "&:hover": {
+    backgroundColor: "#588173",
+  },
+  ".dark &": {
+    backgroundColor: "oklch(21% 0.034 264.665)",
+    color: "#f1f5f9",
+  },
+  ".dark &:hover": {
+    backgroundColor: "#374151",
+  },
+   "&.Mui-disabled": {
+    backgroundColor: "transparent",
+    color: "#6b7280",
+  },
+  ".dark &.Mui-disabled": {
+    backgroundColor: "transparent",
+    color: "#9ca3af",  
+  },
+}))
 
+const ColoredTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#1f2937",   // ✅ your custom background
+    color: "#f1f5f9",                // ✅ text color
+    fontSize: 14,
+    fontWeight: 500,
+    borderRadius: "8px",
+    padding: "6px 12px",
+  },
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#1f2937",             // ✅ arrow color matches bg
+  },
+
+  ".dark & .MuiTooltip-tooltip": {
+    backgroundColor: "#6A9C89", // gray-800 in dark mode
+    color: "#f1f5f9",           // slate-100 text
+  },
+  ".dark & .MuiTooltip-arrow": {
+    color: "#6A9C89",
+  },
+}));
+
+const StyledRating = styled(Rating)({
+ "& .MuiRating-iconFilled": {
+   color: "#1e2939",
+ },
+ "& .MuiRating-iconEmpty": {
+   color: "#6b7280", 
+ },
+
+ ".dark & .MuiRating-iconFilled": {
+   color: "#6A9C89", 
+ },
+ ".dark & .MuiRating-iconEmpty": {
+   color: "#a1a1aa",
+ },
+});
 
 export default function MovieInformation() {
 
   const navigate = useNavigate();
   window.scrollTo({ top: 0, behavior: "smooth" });
   
-   const StyledRating = styled(Rating)({
-    "& .MuiRating-iconFilled": {
-      color: "#1e2939",
-    },
-    "& .MuiRating-iconEmpty": {
-      color: "#6b7280", 
-    },
-
-    ".dark & .MuiRating-iconFilled": {
-      color: "#6A9C89", 
-    },
-    ".dark & .MuiRating-iconEmpty": {
-      color: "#a1a1aa",
-    },
-});
 
   const params = useParams();
   const {
@@ -48,10 +99,12 @@ export default function MovieInformation() {
 
 const {
   data: recommendations,
-  error: recError,
-  isFetching: recLoading,
 } = useGetRecommendationsQuery(params.id);
-  
+
+const {addToWatchlist, addToFavorites} = useMoviesActions();
+
+  const { isAuthenticated } = useSelector((state) => state.auth || {});
+
   if (movieLoading)
     return (
         <div className="w-full h-screen text-center flex items-center justify-center p-10">
@@ -83,7 +136,6 @@ const {
             video.name.toLowerCase().includes("official trailer")
         ) ||
         movie.videos?.results?.find((video) => video.type === "Teaser");
-        console.log(movie)
       return (
       <section className="text-black dark:text-white h-full flex flex-col items-center justify-cente">
       <div className="size-full flex flex-col gap-5 rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
@@ -136,19 +188,53 @@ const {
           <div className="movie-information-btns flex justify-center items-center flex-wrap gap-2">
             <div>
                 <Stack direction="row" spacing={0.2}>
-                  <Button href={movie.homepage || null} target="_blank" rel="noopener noreferrer" size="small" variant={movie.homepage ? "contained" : "disabled"} endIcon={<WebsiteIcon />}>Website</Button>
-                  <Button href={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank" rel="noopener noreferrer" size="small" variant="contained" endIcon={<LocalMoviesIcon />}>IMDB</Button>
+                  <ThemedButton href={movie.homepage || null} target="_blank" rel="noopener noreferrer" size="small" variant={movie.homepage ? "contained" : "disabled"} endIcon={<WebsiteIcon />}>Website</ThemedButton>
+                  <ThemedButton href={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank" rel="noopener noreferrer" size="small" variant="contained" endIcon={<LocalMoviesIcon />}>IMDB</ThemedButton>
                   {movie.videos?.results?.length > 0 && (
-                  <Button href="{`https://www.youtube.com/watch?v=${officialTrailer.key}` || null" target="_blank" rel="noopener noreferrer" size="small" variant={officialTrailer ? "contained" : "disabled"} endIcon={<MovieIcon />}>Trailer</Button>
+                  <ThemedButton href="{`https://www.youtube.com/watch?v=${officialTrailer.key}` || null" target="_blank" rel="noopener noreferrer" size="small" variant={officialTrailer ? "contained" : "disabled"} endIcon={<MovieIcon />}>Trailer</ThemedButton>
                   )}
                   </Stack>
             </div>
             
             <div>
                 <Stack direction="row" spacing={0.2}>
-                  <Button  size="small" variant="contained" endIcon={<FavoriteIcon />}>Favorite</Button>
-                  <Button  size="small" variant="contained" endIcon={<Filter1Icon />}>Watchlist</Button>
-                  <Button onClick={() => navigate(-1)} size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</Button>
+
+                  <ColoredTooltip
+                    title={!isAuthenticated ? "Log in to add to favorites" : ""}
+                    arrow
+                  >
+                    <span>
+                      <ThemedButton
+                        size="small"
+                        variant={isAuthenticated ? "contained" : "disabled"}
+                        endIcon={<FavoriteIcon />}
+                        disabled={!isAuthenticated} // important: disable via prop
+                        onClick={() => addToFavorites(movie.id)}
+                      >
+                        Favorite
+                      </ThemedButton>
+                    </span>
+                  </ColoredTooltip>
+
+                  <ColoredTooltip
+                    title={!isAuthenticated ? "Log in to add to watchlist" : ""}
+                    arrow
+                  >
+                    <span>
+                      <ThemedButton
+                        size="small"
+                        variant={isAuthenticated ? "contained" : "disabled"}
+                        endIcon={<Filter1Icon />}
+                        disabled={!isAuthenticated}
+                        onClick={() => addToWatchlist(movie.id)}
+                      >
+                        Watchlist
+                      </ThemedButton>
+                    </span>
+                  </ColoredTooltip>
+
+                  <ThemedButton onClick={() => navigate(-1)} size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</ThemedButton>
+             
                 </Stack>
             </div>
           </div>
