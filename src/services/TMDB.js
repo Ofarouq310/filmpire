@@ -42,8 +42,15 @@ export const tmdbApi = createApi({
                 }
             }
 
-        })
+        }),
+        getWatchProviders: builder.query({
+            query: (id) => {
+                if(id) {
+                  return `/movie/${id}/watch/providers?api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+                }
+            }
+        }),
     }),
 })
 
-export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery, useGetActorQuery} = tmdbApi;
+export const {useGetMoviesQuery, useMovieDetailsQuery, useGetRecommendationsQuery, useGetActorQuery, useGetWatchProvidersQuery} = tmdbApi;
