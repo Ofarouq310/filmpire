@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const savedSession = localStorage.getItem("session_id");
+const savedUserId = localStorage.getItem("user");
+
+const initialState = {
+  user: savedUserId ? { id: savedUserId } : null,
+  isAuthenticated: !!savedSession,
+  sessionID: savedSession || "",
+  movies: {
+    favorites: [],
+    watchlist: [],
+  },
+};
+
 export const authSlice = createSlice({
   name: "user",
-  initialState: {
-    user: {},
-    isAuthenticated: false,
-    sessionID: "",
-    movies: {
-      favorites: [],
-      watchlist: [],
-    },
-  },
+  initialState,
   reducers: {
     setUser: (state, action) => {
       const { user, session_id } = action.payload || {};
@@ -25,6 +30,8 @@ export const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
         state.sessionID = null;
+        localStorage.removeItem("user");
+        localStorage.removeItem("session_id");
       }
     },
 
@@ -34,6 +41,7 @@ export const authSlice = createSlice({
       state.sessionID = null;
       state.movies = { favorites: [], watchlist: [] };
       localStorage.removeItem("session_id");
+      localStorage.removeItem("user");
     },
 
     toggleFavorite: (state, action) => {
@@ -51,10 +59,11 @@ export const authSlice = createSlice({
         ? state.movies.watchlist.filter((m) => m.id !== movie.id)
         : [...state.movies.watchlist, movie];
     },
+
     setMovies: (state, action) => {
-    const { favorites = [], watchlist = [] } = action.payload || {};
-    state.movies = { favorites, watchlist };
-  },
+      const { favorites = [], watchlist = [] } = action.payload || {};
+      state.movies = { favorites, watchlist };
+    },
   },
 });
 
