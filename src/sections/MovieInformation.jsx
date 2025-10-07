@@ -116,65 +116,67 @@ const StyledRating = styled(Rating)({
 export default function MovieInformation() {
 
   const navigate = useNavigate();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-const params = useParams();
-const {
-  data: movie,
-  error: movieError,
-  isFetching: movieLoading,
-} = useMovieDetailsQuery(params.id, { skip: !params.id });
-const { data: recommendations } = useGetRecommendationsQuery(params.id, { skip: !params.id });
-const { data: providers } = useGetWatchProvidersQuery(params.id, { skip: !params.id });
-
-
-const {addToWatchlist, addToFavorites} = useMoviesActions();
-
-
-const regionProviders = providers?.results?.US || providers?.results?.GB || providers?.results?.CA;
-
-const availableProviders =
+  
+  const params = useParams();
+  const {
+    data: movie,
+    error: movieError,
+    isFetching: movieLoading,
+  } = useMovieDetailsQuery(params.id, { skip: !params.id });
+  const { data: recommendations } = useGetRecommendationsQuery(params.id, { skip: !params.id });
+  const { data: providers } = useGetWatchProvidersQuery(params.id, { skip: !params.id });
+  
+  
+  const {addToWatchlist, addToFavorites} = useMoviesActions();
+  
+  
+  const regionProviders = providers?.results?.US || providers?.results?.GB || providers?.results?.CA;
+  
+  const availableProviders =
   regionProviders?.flatrate ||
   regionProviders?.rent ||
   regionProviders?.buy;
-
-const date = useMemo(() => {
-  if (!movie?.release_date) return "";
-  return new Date(movie.release_date)
+  
+  const date = useMemo(() => {
+    if (!movie?.release_date) return "";
+    return new Date(movie.release_date)
     .toDateString()
     .split(" ")
     .slice(1)
     .join(" ");
-}, [movie?.release_date]);
-
-
- const { isAuthenticated, movies = { favorites: [], watchlist: [] } } =
+  }, [movie?.release_date]);
+  
+  
+  const { isAuthenticated, movies = { favorites: [], watchlist: [] } } =
     useSelector((state) => state.auth || { movies: { favorites: [], watchlist: [] } });
-
-  const containsId = (collection, id) => {
-    if (!collection) return false;
-    return collection.some((entry) => {
-      if (!entry && entry !== 0) return false;
-      return typeof entry === "object" ? entry.id === id : Number(entry) === id;
+    
+    const containsId = (collection, id) => {
+      if (!collection) return false;
+      return collection.some((entry) => {
+        if (!entry && entry !== 0) return false;
+        return typeof entry === "object" ? entry.id === id : Number(entry) === id;
     });
   };
 
   const numericId = Number(params.id);
-    const isFavorite = containsId(movies.favorites, numericId);
-    const isWatchlisted = containsId(movies.watchlist, numericId);
-
+  const isFavorite = containsId(movies.favorites, numericId);
+  const isWatchlisted = containsId(movies.watchlist, numericId);
+  
   
   const handleToggleFavorite = () => {
     if (!movie) return;
     addToFavorites(movie);
   };
-
+  
   const handleToggleWatchlist = () => {
     if (!movie) return;
     addToWatchlist(movie);
   };
-
-
+  
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [movie])
+  
   if (movieLoading)
     return (
         <div className="w-full h-screen text-center flex items-center justify-center p-10">
@@ -195,7 +197,7 @@ const date = useMemo(() => {
           No movies found.
         </p>
       );
-
+      
       
       const officialTrailer =
       movie.videos?.results?.find(
