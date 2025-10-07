@@ -21,7 +21,7 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="relative w-10 h-10 cursor-pointer flex items-center justify-center rounded-md bg-gray-900 dark:bg-[#6A9C89] text-[white] overflow-hidden"
+      className="relative w-10 h-10 cursor-pointer flex items-center justify-center rounded-md bg-gray-800 dark:bg-[#6A9C89] text-[white] overflow-hidden"
       aria-label="Toggle dark mode"
     >
       <div
