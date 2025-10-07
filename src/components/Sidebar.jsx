@@ -16,9 +16,9 @@ export default function Sidebar( { setToggleSidebar, toggleSidebar } ) {
   return (
     <div className={`
         fixed z-9 top-0 left-0 h-full w-60 dark:bg-gray-800 bg-[#6A9C89] shadow-lg
-        transform transition-transform duration-300 ease-in-out
-        ${toggleSidebar ? "translate-x-0 max-md:top-20" : "-translate-x-full"}
-        md:translate-x-0
+        transform transition-transform duration-300 ease-in-out max-lg:top-20
+        ${toggleSidebar ? "translate-x-0" : "-translate-x-full"}
+        lg:translate-x-0
     fixed w-0 md:w-60 h-dvh overflow-y-scroll scrollbar-class`}>
       
         <Link to={`/`} onClick={() => {dispatch(resetState());}}>

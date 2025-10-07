@@ -32,7 +32,7 @@
     }   
 
     main {
-        @apply md:ml-60 h-[calc(h-screen-80px)] mt-20;
+        @apply lg:ml-60 h-[calc(h-screen-80px)] mt-20;
     }
 
     h2 {
@@ -47,7 +47,7 @@
 
 @layer utilities {
     .search {
-        @apply  px-4 py-3 rounded-lg my-10 max-w-3xl mx-auto;
+        @apply  px-4 py-3 rounded-lg my-10 max-w-36 mx-auto;
 
     & div {
         @apply relative flex items-center justify-center;

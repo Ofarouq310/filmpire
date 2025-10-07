@@ -14,39 +14,44 @@ export async function fetchToken() {
 
     if (request_token) {
       localStorage.setItem("request_token", request_token);
-      window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=${window.location.origin}`;
+      localStorage.setItem("redirect_after_login", window.location.pathname);
+
+      const redirectUrl = `${window.location.origin}?approved=true`;
+      window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=${redirectUrl}`;
     }
   } catch (error) {
-    console.error("Axios error:", error.message);
+    console.error("Failed to fetch TMDB token:", error.message);
   }
 }
 
-export async function createSessionID() {
-  const request_token = localStorage.getItem("request_token");
-  if (!request_token) return;
 
-  console.log("Creating session with token:", request_token);
+export async function createSessionID() {
+  const token = localStorage.getItem("request_token");
+
+  if (!token) {
+    console.error("❌ No request_token found — user may not have approved TMDB yet.");
+    return null;
+  }
 
   try {
     const { data } = await moviesApi.post("/authentication/session/new", {
-      request_token,
+      request_token: token,
     });
-    const { session_id } = data;
 
-    if (session_id) {
-      localStorage.setItem("session_id", session_id);
+    if (data?.session_id) {
+      localStorage.setItem("session_id", data.session_id);
       localStorage.removeItem("request_token");
-    }
-
-    return session_id;
-  } catch (error) {
-    if (error.response) {
-      console.error("TMDB error:", error.response.data);
+      return data.session_id;
     } else {
-      console.error("Session creation failed:", error.message);
+      console.error("❌ No session_id returned from TMDB:", data);
+      return null;
     }
+  } catch (err) {
+    console.error("🚨 TMDB session creation failed:", err.response?.data || err.message);
+    return null;
   }
 }
+
 
 export async function logout() {
   const session_id = localStorage.getItem("session_id");
@@ -60,7 +65,6 @@ export async function logout() {
       data: { session_id },
     });
 
-    console.log("TMDB logout response:", data);
 
     if (data.success) {
       localStorage.removeItem("request_token");

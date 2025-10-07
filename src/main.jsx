@@ -9,7 +9,6 @@ import { store } from './app/store.js'
 import MovieInformation from './sections/MovieInformation.jsx'
 import Actor from './sections/Actor.jsx'
 import MyProfile from './sections/MyProfile.jsx'  
-import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
@@ -25,7 +24,7 @@ const router = createBrowserRouter([
         element: <MovieInformation />,
       },
       {
-        path: ':categoryOrGenre/:page',
+        path: ':categoryOrGenre',
         element: <Movies key="category" />,
       },
       {
@@ -35,9 +34,7 @@ const router = createBrowserRouter([
       {
         path: 'myprofile',
         element:
-          <ProtectedRoute>
             <MyProfile />
-          </ProtectedRoute>
       }
     ],
   },

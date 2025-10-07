@@ -15,9 +15,7 @@ export default function Actor() {
   window.scrollTo({ top: 0, behavior: "smooth" });
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params.id)
   const {data: actor, error:actorError, isFetching:actorIsFetching} = useGetActorQuery(params.id)
-  console.log(actor)
   const movies = actor?.movie_credits?.cast;
 
 

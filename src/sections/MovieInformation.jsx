@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom"
-import { useMovieDetailsQuery, useGetRecommendationsQuery} from '../services/TMDB';
+import { useMovieDetailsQuery, useGetRecommendationsQuery, useGetWatchProvidersQuery } from '../services/TMDB';
 import Spinner from '../components/Spinner';
 import Rating from "@mui/material/Rating"
-import { styled } from "@mui/styles";
+import { styled } from '@mui/material/styles';
 import Cast from "../components/Cast";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -17,51 +17,80 @@ import { useNavigate } from "react-router-dom";
 import { useMoviesActions } from '../utils/moviesLibrary'
 import { useSelector } from "react-redux";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { useEffect, useMemo } from 'react';
 
-const ThemedButton = styled(Button)(() => ({
-  backgroundColor: "#6A9C89",
+
+const ThemedButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'isFavorite' && prop !== 'isWatchlisted',
+})(({ isFavorite, isWatchlisted, theme }) => ({
+  backgroundColor: isFavorite
+    ? "#E50914"
+    : isWatchlisted
+    ? "#2563eb"
+    : "#6A9C89",
+
   color: "#fff",
   fontWeight: 600,
   textTransform: "none",
   borderRadius: "8px",
+  transition: "all 0.2s ease-in-out",
+
   "&:hover": {
-    backgroundColor: "#588173",
+    backgroundColor: isFavorite
+      ? "#B20710"
+      : isWatchlisted
+      ? "#1d4ed8"
+      : "#588173",
   },
-  ".dark &": {
-    backgroundColor: "oklch(21% 0.034 264.665)",
+
+
+  [".dark &"]: {
+    backgroundColor: isFavorite
+      ? "#E50914"
+      : isWatchlisted
+      ? "#3b82f6"
+      : "oklch(21% 0.034 264.665)",
     color: "#f1f5f9",
   },
-  ".dark &:hover": {
-    backgroundColor: "#374151",
+
+  [".dark &:hover"]: {
+    backgroundColor: isFavorite
+      ? "#B20710"
+      : isWatchlisted
+      ? "#2563eb"
+      : "#374151",
   },
-   "&.Mui-disabled": {
+
+  "&.Mui-disabled": {
     backgroundColor: "transparent",
     color: "#6b7280",
   },
-  ".dark &.Mui-disabled": {
+
+  [".dark &.Mui-disabled"]: {
     backgroundColor: "transparent",
-    color: "#9ca3af",  
+    color: "#9ca3af",
   },
-}))
+}));
+
 
 const ColoredTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "#1f2937",   // ✅ your custom background
-    color: "#f1f5f9",                // ✅ text color
+    backgroundColor: "#1f2937",
+    color: "#f1f5f9",
     fontSize: 14,
     fontWeight: 500,
     borderRadius: "8px",
     padding: "6px 12px",
   },
   [`& .${tooltipClasses.arrow}`]: {
-    color: "#1f2937",             // ✅ arrow color matches bg
+    color: "#1f2937",
   },
 
   ".dark & .MuiTooltip-tooltip": {
-    backgroundColor: "#6A9C89", // gray-800 in dark mode
-    color: "#f1f5f9",           // slate-100 text
+    backgroundColor: "#6A9C89",
+    color: "#f1f5f9", 
   },
   ".dark & .MuiTooltip-arrow": {
     color: "#6A9C89",
@@ -87,24 +116,67 @@ const StyledRating = styled(Rating)({
 export default function MovieInformation() {
 
   const navigate = useNavigate();
-  window.scrollTo({ top: 0, behavior: "smooth" });
   
-
   const params = useParams();
   const {
-  data: movie,
-  error: movieError,
-  isFetching: movieLoading,
-} = useMovieDetailsQuery(params.id);
+    data: movie,
+    error: movieError,
+    isFetching: movieLoading,
+  } = useMovieDetailsQuery(params.id, { skip: !params.id });
+  const { data: recommendations } = useGetRecommendationsQuery(params.id, { skip: !params.id });
+  const { data: providers } = useGetWatchProvidersQuery(params.id, { skip: !params.id });
+  
+  
+  const {addToWatchlist, addToFavorites} = useMoviesActions();
+  
+  
+  const regionProviders = providers?.results?.US || providers?.results?.GB || providers?.results?.CA;
+  
+  const availableProviders =
+  regionProviders?.flatrate ||
+  regionProviders?.rent ||
+  regionProviders?.buy;
+  
+  const date = useMemo(() => {
+    if (!movie?.release_date) return "";
+    return new Date(movie.release_date)
+    .toDateString()
+    .split(" ")
+    .slice(1)
+    .join(" ");
+  }, [movie?.release_date]);
+  
+  
+  const { isAuthenticated, movies = { favorites: [], watchlist: [] } } =
+    useSelector((state) => state.auth || { movies: { favorites: [], watchlist: [] } });
+    
+    const containsId = (collection, id) => {
+      if (!collection) return false;
+      return collection.some((entry) => {
+        if (!entry && entry !== 0) return false;
+        return typeof entry === "object" ? entry.id === id : Number(entry) === id;
+    });
+  };
 
-const {
-  data: recommendations,
-} = useGetRecommendationsQuery(params.id);
-
-const {addToWatchlist, addToFavorites} = useMoviesActions();
-
-  const { isAuthenticated } = useSelector((state) => state.auth || {});
-
+  const numericId = Number(params.id);
+  const isFavorite = containsId(movies.favorites, numericId);
+  const isWatchlisted = containsId(movies.watchlist, numericId);
+  
+  
+  const handleToggleFavorite = () => {
+    if (!movie) return;
+    addToFavorites(movie);
+  };
+  
+  const handleToggleWatchlist = () => {
+    if (!movie) return;
+    addToWatchlist(movie);
+  };
+  
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [movie])
+  
   if (movieLoading)
     return (
         <div className="w-full h-screen text-center flex items-center justify-center p-10">
@@ -125,27 +197,61 @@ const {addToWatchlist, addToFavorites} = useMoviesActions();
           No movies found.
         </p>
       );
-
-      const date = new Date(`${movie.release_date}`).toDateString().split(' ').slice(1).join(' ');
-
+      
+      
       const officialTrailer =
-        movie.videos?.results?.find(
-          (video) =>
-            video.type === "Teaser" &&
+      movie.videos?.results?.find(
+        (video) =>
+          video.type === "Teaser" &&
             video.name.toLowerCase().includes("official teaser") ||
             video.name.toLowerCase().includes("official trailer")
         ) ||
-        movie.videos?.results?.find((video) => video.type === "Teaser");
+        movie.videos?.results?.find((video) => video.type === "Teaser")
+        || movie.videos.results[0];
+        
+  
+
       return (
-      <section className="text-black dark:text-white h-full flex flex-col items-center justify-cente">
-      <div className="size-full flex flex-col gap-5 rounded-lg md:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
+      <section className="text-black dark:text-white h-full flex flex-col items-center justify-center">
+      <div className="size-full flex flex-col gap-5 rounded-lg lg:flex-row md:max-w-lg lg:max-w-5xl py-10 sm:px-5">
         <div className='flex-1 flex justify-center'>
-          <div className="rounded-full">
-            <img 
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={`${movie.poster} poster`}
-              className="shadow-black shadow-xl/50 max-md:h-[350px]"
-            />
+            <div className="relative flex flex-col min-[73.75rem]:justify-between">
+                <img 
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  alt={`${movie.poster} poster`}
+                  className="shadow-black shadow-xl/50 rounded-t-md min-[73.75rem]:h-[400px] max-[73.75rem]:h-[350px]"
+                />
+
+              {availableProviders && (
+                <div className="flex flex-col items-center justify-center gap-1 mt-1">
+                  <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    {regionProviders?.flatrate
+                    ? "Streaming on"
+                    : regionProviders?.buy
+                    ? "Available to buy on"
+                    : "Available on"
+                    }
+                  </h4>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {availableProviders.map((provider) => (
+                        <a
+                          key={provider.provider_name}
+                          href={regionProviders?.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="transition transform hover:scale-105"
+                        >
+                          <img
+                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                            alt={provider.provider_name}
+                            className="w-10 h-10 rounded-md shadow-md"
+                          />
+                        </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
           </div>
         </div>
 
@@ -181,7 +287,7 @@ const {addToWatchlist, addToFavorites} = useMoviesActions();
           <div className="cast">
             <h3>Top Cast</h3>
             <div className="flex max-w-full flex-wrap gap-4">
-              {movie?.credits?.cast.slice(0,6).map((actor)=> <Cast key={actor.id} actor={actor} />)}
+              {movie?.credits?.cast?.slice(0,6)?.map((actor)=> <Cast key={actor.id} actor={actor} />)}
             </div>
           </div>
           
@@ -191,53 +297,53 @@ const {addToWatchlist, addToFavorites} = useMoviesActions();
                   <ThemedButton href={movie.homepage || null} target="_blank" rel="noopener noreferrer" size="small" variant={movie.homepage ? "contained" : "disabled"} endIcon={<WebsiteIcon />}>Website</ThemedButton>
                   <ThemedButton href={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank" rel="noopener noreferrer" size="small" variant="contained" endIcon={<LocalMoviesIcon />}>IMDB</ThemedButton>
                   {movie.videos?.results?.length > 0 && (
-                  <ThemedButton href="{`https://www.youtube.com/watch?v=${officialTrailer.key}` || null" target="_blank" rel="noopener noreferrer" size="small" variant={officialTrailer ? "contained" : "disabled"} endIcon={<MovieIcon />}>Trailer</ThemedButton>
+                  <ThemedButton href={`https://www.youtube.com/watch?v=${officialTrailer.key}`} target="_blank" rel="noopener noreferrer" size="small" variant={officialTrailer ? "contained" : "disabled"} endIcon={<MovieIcon />}>Trailer</ThemedButton>
                   )}
                   </Stack>
             </div>
             
-            <div>
-                <Stack direction="row" spacing={0.2}>
+             <div>
+          <Stack direction="row" spacing={0.2}>
+            <ColoredTooltip
+              title={!isAuthenticated ? "Log in to mark as favorite" : ""}
+              arrow
+            >
+              <span>
+                <ThemedButton
+                  size="small"
+                  variant={isAuthenticated ? "contained" : "disabled"}
+                  endIcon={<FavoriteIcon />}
+                  isFavorite={isFavorite}
+                  disabled={!isAuthenticated}
+                  onClick={handleToggleFavorite}
+                >
+                  {isFavorite ? "Favorited" : "Favorite"}
+                </ThemedButton>
+              </span>
+            </ColoredTooltip>
 
-                  <ColoredTooltip
-                    title={!isAuthenticated ? "Log in to add to favorites" : ""}
-                    arrow
-                  >
-                    <span>
-                      <ThemedButton
-                        size="small"
-                        variant={isAuthenticated ? "contained" : "disabled"}
-                        endIcon={<FavoriteIcon />}
-                        disabled={!isAuthenticated} // important: disable via prop
-                        onClick={() => addToFavorites(movie.id)}
-                      >
-                        Favorite
-                      </ThemedButton>
-                    </span>
-                  </ColoredTooltip>
+            <ColoredTooltip
+              title={!isAuthenticated ? "Log in to add to watchlist" : ""}
+              arrow
+            >
+              <span>
+                <ThemedButton
+                  isWatchlisted={isWatchlisted}
+                  size="small"
+                  variant={isAuthenticated ? "contained" : "disabled"}
+                  endIcon={<Filter1Icon />}
+                  disabled={!isAuthenticated}
+                  onClick={handleToggleWatchlist}
+                >
+                  {isWatchlisted ? "Watchlisted" : "Watchlist"}
+                </ThemedButton>
+              </span>
+            </ColoredTooltip>
 
-                  <ColoredTooltip
-                    title={!isAuthenticated ? "Log in to add to watchlist" : ""}
-                    arrow
-                  >
-                    <span>
-                      <ThemedButton
-                        size="small"
-                        variant={isAuthenticated ? "contained" : "disabled"}
-                        endIcon={<Filter1Icon />}
-                        disabled={!isAuthenticated}
-                        onClick={() => addToWatchlist(movie.id)}
-                      >
-                        Watchlist
-                      </ThemedButton>
-                    </span>
-                  </ColoredTooltip>
-
-                  <ThemedButton onClick={() => navigate(-1)} size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</ThemedButton>
-             
-                </Stack>
-            </div>
-          </div>
+            <ThemedButton onClick={() => navigate(-1)} size="small" variant="contained" endIcon={<ArrowBackIosIcon />}>Back</ThemedButton>
+          </Stack>
+        </div>
+      </div>
 
         </div>
       </div>
