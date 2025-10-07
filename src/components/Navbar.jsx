@@ -19,7 +19,7 @@ export default function Navbar({ setToggleSidebar }) {
       transform: "scale(1.1)",
       transition: "all 0.3s ease-in-out",
     },
-    "@media (min-width: 768px)": {
+    "@media (min-width: 1024px)": {
       display: "none",
     },
   }));
@@ -28,6 +28,7 @@ export default function Navbar({ setToggleSidebar }) {
   const { isAuthenticated } = useSelector((state) => state.auth || {});
 
   useEffect(() => {
+    
     const params = new URLSearchParams(window.location.search);
     const token = localStorage.getItem("request_token");
     const savedSession = localStorage.getItem("session_id");
@@ -76,15 +77,15 @@ export default function Navbar({ setToggleSidebar }) {
   return (
     <div
       className="
-      md:w-[calc(100%-240px)] h-20 w-full md:ml-60
+      lg:w-[calc(100%-240px)] h-20 w-full lg:ml-60
       dark:bg-gray-900 bg-[#6A9C89]
       sm:p-5 p-3 flex items-center justify-between
-      text-gray-900 dark:text-white
+      text-gray-300 dark:text-white
       text-2xl font-bold fixed top-0 z-10
       shadow-lg
     "
     >
-      <div className="sm:flex-row flex-col-reverse flex flex-wrap-reverse gap-3 items-center">
+      <div className="sm:flex-row flex-col-reverse flex flex-wrap-reverse sm:gap-3 gap-1 items-center">
         <HamburgerWrapper onClick={() => setToggleSidebar((prev) => !prev)}>
           <HamburgerMenuIcon />
         </HamburgerWrapper>
@@ -93,26 +94,17 @@ export default function Navbar({ setToggleSidebar }) {
 
       <Search />
 
-      <div className="flex-col-reverse flex flex-wrap sm:flex-row items-center justify-center text-center gap-0.5">
+      <div className="flex-col flex flex-wrap sm:flex-row items-center justify-center text-center text-base cursor-pointer">
         {isAuthenticated ? (
-          <Link to="/myprofile">
-            <Button
-              variant="text"
-              color="inherit"
-              startIcon={<AccountCircle fontSize="medium" />}
-            >
+          <Link to="/myprofile" className="flex flex-col sm:flex-row gap-1 items-center uppercase text-sm">
+            <AccountCircle fontSize="medium" />
               Profile
-            </Button>
           </Link>
         ) : (
-          <Button
-            variant="text"
-            color="inherit"
-            onClick={fetchToken}
-            startIcon={<AccountCircle fontSize="medium" />}
-          >
+          <div onClick={fetchToken} className="flex flex-col items-center">
+            <AccountCircle fontSize="medium" />
             Login
-          </Button>
+          </div>
         )}
       </div>
     </div>
