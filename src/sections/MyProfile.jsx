@@ -23,7 +23,7 @@ export default function MyProfile() {
       localStorage.removeItem("session_id");
       localStorage.removeItem("request_token");
       dispatch(logoutUser());
-      navigate("/");
+      navigate("/", { replace: true });
     }
   };
 
