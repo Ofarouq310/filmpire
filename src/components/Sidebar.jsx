@@ -42,8 +42,8 @@ export default function Sidebar({ setToggleSidebar, toggleSidebar }) {
         </div>
       </Link>
 
-      <section className="py-5 text-black dark:text-white border-b-2 border-[#b5bec638]">
-        <h2 className="mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 ">
+      <section className="py-5 text-gray-800 dark:text-gray-300 border-b-2 border-[#b5bec638]">
+        <h2 className="mb-3 dark:text-tertiary-color text-gray-300 text-base px-4 ">
           Categories
         </h2>
         <ul className="space-y-1 text-lg">
@@ -57,8 +57,8 @@ export default function Sidebar({ setToggleSidebar, toggleSidebar }) {
         </ul>
       </section>
 
-      <section className="py-5 text-black dark:text-white border-b-2 border-[#b5bec638]">
-        <h2 className="mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 ">
+      <section className="py-5 text-gray-800 dark:text-gray-300   border-b-2 border-[#b5bec638]">
+        <h2 className="mb-3 dark:text-tertiary-color text-gray-300 text-base px-4 ">
           Genres
         </h2>
         <ul className="space-y-1 text-lg">
