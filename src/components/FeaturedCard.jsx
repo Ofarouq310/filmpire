@@ -26,9 +26,9 @@ export default function FeaturedCard({ movie }) {
           alt={featured.title || featured.name}
           width="1280"
           height="720"
-          className="w-full h-auto object-cover"
-          fetchPriority="high" // 👈 tells the browser it's the top priority
-          loading="eager" // 👈 avoids deferring this critical image
+          className="object-cover size-full"
+          fetchPriority="high"
+          loading="eager" 
           decoding="async"
         />
         <div className="absolute z-5 inset-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent transition duration-300 group-hover:from-black/95 group-hover:via-black/60" />
