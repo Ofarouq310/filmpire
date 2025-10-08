@@ -24,12 +24,13 @@ export async function fetchToken() {
   }
 }
 
-
 export async function createSessionID() {
   const token = localStorage.getItem("request_token");
 
   if (!token) {
-    console.error("❌ No request_token found — user may not have approved TMDB yet.");
+    console.error(
+      "❌ No request_token found — user may not have approved TMDB yet."
+    );
     return null;
   }
 
@@ -47,11 +48,13 @@ export async function createSessionID() {
       return null;
     }
   } catch (err) {
-    console.error("🚨 TMDB session creation failed:", err.response?.data || err.message);
+    console.error(
+      "🚨 TMDB session creation failed:",
+      err.response?.data || err.message
+    );
     return null;
   }
 }
-
 
 export async function logout() {
   const session_id = localStorage.getItem("session_id");
@@ -64,7 +67,6 @@ export async function logout() {
     const { data } = await moviesApi.delete("/authentication/session", {
       data: { session_id },
     });
-
 
     if (data.success) {
       localStorage.removeItem("request_token");

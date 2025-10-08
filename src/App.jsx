@@ -1,22 +1,29 @@
-import { useState } from 'react'
-import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
-import { Outlet } from 'react-router-dom';
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import { Outlet } from "react-router-dom";
 
 export default function App() {
-
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   return (
     <>
       <header>
-        <Navbar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />  
+        <Navbar
+          toggleSidebar={toggleSidebar}
+          setToggleSidebar={setToggleSidebar}
+        />
       </header>
-      <Sidebar toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
-      
+      <Sidebar
+        toggleSidebar={toggleSidebar}
+        setToggleSidebar={setToggleSidebar}
+      />
+
       <main>
         <Outlet />
+        <SpeedInsights />
       </main>
     </>
-  )
+  );
 }
