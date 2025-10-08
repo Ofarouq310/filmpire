@@ -25,7 +25,6 @@
 
     body {
         @apply font-sansation scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F];
-
         @apply bg-[#E9EFEC] text-gray-900;
         @apply dark:bg-gray-800 dark:text-white;
     }
