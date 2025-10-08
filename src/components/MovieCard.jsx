@@ -28,10 +28,11 @@ export default function MovieCard({
         <img
           src={
             poster_path
-              ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+              ? `https://image.tmdb.org/t/p/w300/${poster_path}`
               : noPoster
           }
           alt={title}
+          loading="lazy"
         />
       </Link>
 
