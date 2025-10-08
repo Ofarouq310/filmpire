@@ -12,7 +12,7 @@ export default function FeaturedCard({ movie }) {
       className="mt-5 w-full block group overflow-hidden shadow-2xl"
     >
       <div
-        className="relative h-[490px] w-full sm:rounded-lg overflow-hidden bg-center bg-cover  transition-transform duration-500 group-hover:scale-[1.02]"
+        className="relative h-[490px] w-full overflow-hidden bg-center bg-cover transition-transform duration-500 group-hover:scale-[1.02]"
         style={{ backgroundImage: `url(${backdropUrl})` }}
       >
         <div className="absolute z-5 inset-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent transition duration-300 group-hover:from-black/95 group-hover:via-black/60" />

@@ -70,7 +70,7 @@ export default function Movies() {
     <section className="flex flex-col items-center justify-center mb-10">
       <FeaturedCard movie={data.results.slice(0, 1)} />
 
-      <div className="p-8 all-movies">
+      <div className="px-8 py-4 all-movies">
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {data.results.slice(1, 17).map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
