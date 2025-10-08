@@ -52,12 +52,11 @@ export default function Search() {
   };
 
   return (
-    <div className="flex items-center border-b border-gray-400 dark:border-gray-600 py-1 w-full max-w-sm mx-auto">
+    <div className="flex items-center border-b border-gray-400 dark:border-gray-600 py-1">
       <SearchIcon
         className="text-gray-400 dark:text-gray-300 cursor-pointer hover:scale-110 transition-transform"
         onClick={handleSearch}
       />
-
       <input
         name="search-input"
         type="text"
@@ -69,9 +68,8 @@ export default function Search() {
         onKeyDown={(e) => {
           if (e.key === "Enter") handleSearch();
         }}
-        className="ml-2 bg-transparent text-base placeholder:text-sm focus:outline-none placeholder-gray-400 dark:placeholder-gray-600 text-gray-900 dark:text-white w-full"
+        className="ml-2 bg-transparent text-base placeholder:text-sm placeholder:text-center focus:outline-none placeholder-gray-300 dark:placeholder-gray-700 text-gray-900 dark:text-white w-30 sm:w-65"
       />
-
       {query && (
         <CloseIcon
           onClick={handleClear}
