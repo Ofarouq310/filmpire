@@ -66,13 +66,17 @@ export default function Movies() {
       </div>
     );
 
+  const sortedResults = [...data.results].sort(
+    (a, b) => new Date(b.release_date) - new Date(a.release_date)
+  );
+
   return (
     <section className="flex flex-col items-center justify-center mb-10">
-      <FeaturedCard movie={data.results.slice(0, 1)} />
+      <FeaturedCard movie={sortedResults?.slice(0, 1)} />
 
       <div className="px-8 py-4 all-movies">
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {data.results.slice(1, 17).map((movie) => (
+          {sortedResults?.slice(1, 17).map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </ul>
