@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -21,6 +22,7 @@ export default function App() {
 
       <main>
         <Outlet />
+        <SpeedInsights />
       </main>
     </>
   );
