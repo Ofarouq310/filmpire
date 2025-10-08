@@ -1,63 +1,76 @@
-import { categories, genres } from '../constants';
-import ListItem from './ListItem';
-import { selectGenreOrCategory, resetState }  from '../features/currentGenreOrCategory'
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { categories, genres } from "../constants";
+import ListItem from "./ListItem";
+import {
+  selectGenreOrCategory,
+  resetState,
+} from "../features/currentGenreOrCategory";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
-export default function Sidebar( { setToggleSidebar, toggleSidebar } ) {
-
+export default function Sidebar({ setToggleSidebar, toggleSidebar }) {
   const dispatch = useDispatch();
 
-  const handlClick= (category) => {
+  const handlClick = (category) => {
     dispatch(selectGenreOrCategory(category));
     setToggleSidebar(false);
-  }
+  };
 
   return (
-    <div className={`
+    <div
+      className={`
         fixed z-9 top-0 left-0 h-full w-60 dark:bg-gray-800 bg-[#6A9C89] shadow-lg
         transform transition-transform duration-300 ease-in-out max-lg:top-20
         ${toggleSidebar ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0
-    fixed w-0 md:w-60 h-dvh overflow-y-scroll scrollbar-class`}>
-      
-        <Link to={`/`} onClick={() => {dispatch(resetState());}}>
-      <div className='w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center'>
-          <img
-            src="/icon.png"
-            alt="logo"
-            className='size-6 mx-auto mr-1'
-            />
-          <h1 className='uppercase text-4xl text-white font-black'>
+    fixed w-0 md:w-60 h-dvh overflow-y-scroll scrollbar-class`}
+    >
+      <Link
+        to={`/`}
+        onClick={() => {
+          dispatch(resetState());
+        }}
+      >
+        <div className="w-full text-center p-10 border-b-2 border-[#b5bec638] flex items-center justify-center">
+          <img src="/icon.png" alt="logo" className="size-6 mx-auto mr-1" />
+          <h1 className="uppercase text-4xl text-white font-black">
             Fil
-            <span className='text-transparent bg-clip-text bg-no-repeat bg-center bg-cover bg-[url("/icon.png")]'>m</span>
+            <span className='text-transparent bg-clip-text bg-no-repeat bg-center bg-cover bg-[url("/icon.png")]'>
+              m
+            </span>
             pire
           </h1>
         </div>
-        </Link>
+      </Link>
 
-      <section className='py-5 text-black dark:text-white border-b-2 border-[#b5bec638]'>
-        <h2 className='mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 '>Categories</h2>
-        <ul className='space-y-1 text-lg'>
-          {
-          categories.map((category) => (
-            (
-            <ListItem key={category.title} category={category} onClick= {()=> handlClick(category.label)} />
-          )))
-          }
+      <section className="py-5 text-black dark:text-white border-b-2 border-[#b5bec638]">
+        <h2 className="mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 ">
+          Categories
+        </h2>
+        <ul className="space-y-1 text-lg">
+          {categories.map((category) => (
+            <ListItem
+              key={category.title}
+              category={category}
+              onClick={() => handlClick(category.label)}
+            />
+          ))}
         </ul>
       </section>
 
-      <section className='py-5 text-black dark:text-white border-b-2 border-[#b5bec638]'>
-        <h2 className='mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 '>Genres</h2>
-        <ul className='space-y-1 text-lg'>
-          {
-            genres.map((genre) => (
-            <ListItem key={genre.title} genre={genre}  onClick= {()=> handlClick(genre.id)} />
-            ))
-          }
+      <section className="py-5 text-black dark:text-white border-b-2 border-[#b5bec638]">
+        <h2 className="mb-3 dark:text-tertiary-color text-gray-200 text-base px-4 ">
+          Genres
+        </h2>
+        <ul className="space-y-1 text-lg">
+          {genres.map((genre) => (
+            <ListItem
+              key={genre.title}
+              genre={genre}
+              onClick={() => handlClick(genre.id)}
+            />
+          ))}
         </ul>
       </section>
     </div>
-  )
+  );
 }

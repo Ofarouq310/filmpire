@@ -27,14 +27,16 @@ export default function MyProfile() {
     }
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       if (!user?.id) return;
       setLoading(true);
       setError(null);
       try {
-        const [favs, watch] = await Promise.all([getFavorites(), getWatchlist()]);
+        const [favs, watch] = await Promise.all([
+          getFavorites(),
+          getWatchlist(),
+        ]);
         dispatch(setMovies({ favorites: favs, watchlist: watch }));
       } catch (err) {
         setError(err.response?.data?.status_message || err.message);
@@ -50,7 +52,10 @@ export default function MyProfile() {
     <div className="p-8 pb-2">
       <div className="bg-[#6A9C89] dark:bg-gray-900 p-8 flex max-sm:flex-col justify-between items-center">
         <h2 className="sm:text-2xl sm:m-0 text-lg">My Profile</h2>
-        <button onClick={handleLogout} className="flex gap-1 font-black cursor-pointer">
+        <button
+          onClick={handleLogout}
+          className="flex gap-1 font-black cursor-pointer"
+        >
           Logout
           <LogoutIcon />
         </button>

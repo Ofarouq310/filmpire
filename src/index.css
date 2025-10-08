@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @plugin 'tailwind-scrollbar' {
     nocompatible: true;
-    preferredStrategy: 'pseudoelements';
+    preferredstrategy: "pseudoelements";
 }
 
 @theme {
-    --font-sansation: 'Sansation', sans-serif;
-    --font-notosans: 'Noto Sans', sans-serif;
-    --color-primary-color: #1D1E2C;
+    --font-sansation: "Sansation", sans-serif;
+    --font-notosans: "Noto Sans", sans-serif;
+    --color-primary-color: #1d1e2c;
     --color-secondary-color: #333347;
-    --color-tertiary-color: #59656F;
+    --color-tertiary-color: #59656f;
     --breakpoint-xs: 480px;
 }
 
@@ -24,12 +24,11 @@
     }
 
     body {
-        @apply font-sansation scrollbar scrollbar-w-2 
-                scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F];
+        @apply font-sansation scrollbar scrollbar-w-2 scrollbar-thumb-[#B5BEC6] scrollbar-hover:scrollbar-thumb-[#59656F];
 
         @apply bg-[#E9EFEC] text-gray-900;
         @apply dark:bg-gray-800 dark:text-white;
-    }   
+    }
 
     main {
         @apply lg:ml-60 h-[calc(h-screen-80px)] mt-20;
@@ -38,47 +37,44 @@
     h2 {
         @apply mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white;
     }
-    
+
     h3 {
         @apply mb-1 font-normal text-lg text-gray-700 dark:text-gray-400;
     }
-    
 }
 
 @layer utilities {
     .search {
-        @apply  px-4 py-3 rounded-lg my-10 max-w-36 mx-auto;
+        @apply px-4 py-3 rounded-lg my-10 max-w-36 mx-auto;
 
-    & div {
-        @apply relative flex items-center justify-center;
-    }
+        & div {
+            @apply relative flex items-center justify-center;
+        }
 
-    & img {
-        @apply absolute left-2 h-5 w-5;
-    }
+        & img {
+            @apply absolute left-2 h-5 w-5;
+        }
 
-    & input {
-        @apply w-full bg-transparent placeholder-gray-700 py-1 ml-3 text-base 
-            outline-none border-b-0 focus:border-b 
-            focus:w-2xs transition-all duration-300 text-center ease-in-out;
-        @apply text-gray-900 dark:text-gray-200;
-        @apply focus:border-gray-500 dark:focus:border-gray-200;
-    }
+        & input {
+            @apply w-full bg-transparent placeholder-gray-700 py-1 ml-3 text-base outline-none border-b-0 focus:border-b focus:w-2xs transition-all duration-300 text-center ease-in-out;
+            @apply text-gray-900 dark:text-gray-200;
+            @apply focus:border-gray-500 dark:focus:border-gray-200;
+        }
     }
 
     .categories__list-items {
-        @apply cursor-pointer px-4 py-2 dark:hover:bg-[#6A9C89] dark:active:bg-[#578875] hover:bg-gray-800 active:bg-gray-900
-        hover:text-gray-100 transition duration-150 ease-in-out rounded-sm;
+        @apply cursor-pointer px-4 py-2 dark:hover:bg-[#6A9C89] dark:active:bg-[#578875] hover:bg-gray-800 active:bg-gray-900 hover:text-gray-100 transition duration-150 ease-in-out rounded-sm;
     }
 
     .all-movies {
-    @apply space-y-10;
-    & ul {
-        @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ;
-    }
+        @apply space-y-10;
+
+        & ul {
+            @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+        }
     }
 
-     .movie-card {
+    .movie-card {
         @apply rounded-md border-none shadow-inner m-3 bg-transparent;
 
         & img {
@@ -86,8 +82,8 @@
         }
 
         & h3 {
-          @apply font-bold text-base line-clamp-1;
-          @apply text-gray-900 dark:text-gray-100;
+            @apply font-bold text-base line-clamp-1;
+            @apply text-gray-900 dark:text-gray-100;
         }
 
         & .content {

@@ -3,20 +3,19 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
 export default function DarkModeToggle() {
-
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || (prefersDark ? "dark" : "light")
   );
 
   useEffect(() => {
-  localStorage.setItem("theme", theme);
-  if (theme === "dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-}, [theme]);
+    localStorage.setItem("theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   return (
     <button
@@ -44,6 +43,5 @@ export default function DarkModeToggle() {
         <Brightness7Icon />
       </div>
     </button>
-
   );
 }

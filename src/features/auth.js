@@ -67,7 +67,12 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, logoutUser, toggleFavorite, toggleWatchlist, setMovies } =
-  authSlice.actions;
+export const {
+  setUser,
+  logoutUser,
+  toggleFavorite,
+  toggleWatchlist,
+  setMovies,
+} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -28,7 +28,6 @@ export default function Navbar({ setToggleSidebar }) {
   const { isAuthenticated } = useSelector((state) => state.auth || {});
 
   useEffect(() => {
-    
     const params = new URLSearchParams(window.location.search);
     const token = localStorage.getItem("request_token");
     const savedSession = localStorage.getItem("session_id");
@@ -63,13 +62,15 @@ export default function Navbar({ setToggleSidebar }) {
       (async () => {
         const session_id = await createSessionID();
         if (session_id) {
-          window.history.replaceState({}, document.title, window.location.pathname);
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
           await loadUserAndMovies(session_id);
         }
       })();
-    }
-
-    else if (savedSession) {
+    } else if (savedSession) {
       loadUserAndMovies(savedSession);
     }
   }, [dispatch]);
@@ -96,9 +97,12 @@ export default function Navbar({ setToggleSidebar }) {
 
       <div className="flex-col flex flex-wrap sm:flex-row items-center justify-center text-center text-base cursor-pointer">
         {isAuthenticated ? (
-          <Link to="/myprofile" className="flex flex-col sm:flex-row gap-1 items-center uppercase text-sm">
+          <Link
+            to="/myprofile"
+            className="flex flex-col sm:flex-row gap-1 items-center uppercase text-sm"
+          >
             <AccountCircle fontSize="medium" />
-              Profile
+            Profile
           </Link>
         ) : (
           <div onClick={fetchToken} className="flex flex-col items-center">
